@@ -2246,7 +2246,14 @@ class SiteTree extends DataObject implements PermissionProvider, i18nEntityProvi
         };
         $viewAllGroupsMap = $mapFn(Permission::get_groups_by_permission(['SITETREE_VIEW_ALL', 'ADMIN']));
         $editAllGroupsMap = $mapFn(Permission::get_groups_by_permission(['SITETREE_EDIT_ALL', 'ADMIN']));
-        $membersMap = Member::get()->map('ID', 'Name');
+
+        // $membersMap = Member::get()->map('ID', 'Name');
+        
+        /**
+         * Hotfix to ensure loading with larger amounts of data (200,000+).
+         * @see https://github.com/silverstripe/silverstripe-cms/issues/2901
+         **/
+        $membersMap = Member::get()->map('ID', 'Name')->limit(100);
 
         $fields = new FieldList(
             $rootTab = new TabSet(
