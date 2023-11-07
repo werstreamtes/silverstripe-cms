@@ -2253,7 +2253,7 @@ class SiteTree extends DataObject implements PermissionProvider, i18nEntityProvi
          * Hotfix to ensure loading with larger amounts of data (200,000+).
          * @see https://github.com/silverstripe/silverstripe-cms/issues/2901
          **/
-        $membersMap = Member::get()->map('ID', 'Name')->limit(100);
+        $membersMap = Member::get()->limit(100)->map('ID', 'Name');
 
         $fields = new FieldList(
             $rootTab = new TabSet(
